@@ -14,7 +14,6 @@
         this.Inventario = new List<Item>();
     }
 
-    // --- NUEVO MÉTODO ---
     public int ObtenerAtaqueTotal()
     {
         int ataqueTotal = 0;
@@ -33,16 +32,16 @@
         }
         return defensaTotal;
     }
-    public int RecibirDaño(int daño)
+    public void RecibirDaño(int daño)
     {
         this.Vida = this.Vida - daño;
     }
-    public int Atacar(Mago enemigo)
+    public void Atacar(Mago enemigo)
     {
         int ataque = this.ObtenerAtaqueTotal();
-        int dañorecibido = enemigo.RecibirDaño(daño);
+        enemigo.RecibirDaño(ataque);
     }
-    public int Curar()
+    public void Curar()
     {
         this.Vida = 100;
     }
