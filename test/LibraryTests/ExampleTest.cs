@@ -1,3 +1,5 @@
+using Library;
+
 namespace LibraryTests;
 
 public class Tests
@@ -8,8 +10,9 @@ public class Tests
     }
 
     [Test]
-    public void Test1()
+    public void CrearElfoTest(Elfos elfo)
     {
+        Elfos Adam = new Elfos("Adam");
         Assert.Pass();
     }
 }
