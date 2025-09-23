@@ -53,5 +53,20 @@ public class Elfos
             this.HealthPoints = 0;
         }
     }
-    /*public void Atacar()*/ //Queda pendiente 
+
+    public void Atacar(Mago enemigo) // Solo ataca a Magos
+    {
+        int ataque = this.ObtenerAtaqueTotal();
+        enemigo.RecibirDaño(ataque);
+    }
+    public void Atacar(Enanos enemigo) // Solo ataca a Enanos
+    {
+        int ataque = this.ObtenerAtaqueTotal();
+        enemigo.RecibirDaño(ataque);
+    }
+    public void Atacar(Elfos enemigo) // Solo ataca a Elfos
+    {
+        int ataque = this.ObtenerAtaqueTotal();
+        enemigo.RecibirDaño(ataque);
+    }
 }
