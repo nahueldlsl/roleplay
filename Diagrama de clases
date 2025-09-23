@@ -9,4 +9,4 @@ Atributos: nombre, ataque, defensa.
 
 Clase Hechizo:
 
-Atributos: nombre, ataque. Asi? o no tenemos clase personaje?
+Atributos: nombre, ataque.
