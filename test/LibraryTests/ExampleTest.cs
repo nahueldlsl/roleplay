@@ -50,9 +50,6 @@ public class Test()
         }
     }
 
-    // -------------------------------
-    // TESTS DE ENANOS
-    // -------------------------------
     public class EnanosTests
     {
         [Test]
