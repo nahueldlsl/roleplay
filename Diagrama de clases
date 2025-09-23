@@ -1,0 +1,12 @@
+Clases Mago, Elfo, Enano:
+Atributos: nombre, vida, inventario (una lista de Items).
+
+El Mago tiene un atributo extra: libroDeHechizos (una lista de Hechizos).
+
+Clase Item:
+
+Atributos: nombre, ataque, defensa.
+
+Clase Hechizo:
+
+Atributos: nombre, ataque. Asi? o no tenemos clase personaje?
