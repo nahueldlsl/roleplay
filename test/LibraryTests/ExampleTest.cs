@@ -61,9 +61,6 @@ namespace LibraryTests
         }
     }
 
-    // -------------------------------
-    // TESTS DE ENANOS
-    // -------------------------------
     public class EnanosTests
     {
         [Test]
