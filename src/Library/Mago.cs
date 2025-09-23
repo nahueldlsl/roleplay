@@ -43,6 +43,16 @@ public class Mago
         int ataque = this.ObtenerAtaqueTotal();
         enemigo.RecibirDaño(ataque);
     }
+    public void Atacar(Elfos enemigo) // Solo ataca a Magos
+    {
+        int ataque = this.ObtenerAtaqueTotal();
+        enemigo.RecibirDaño(ataque);
+    }
+    public void Atacar(Enanos enemigo) // Solo ataca a Magos
+    {
+        int ataque = this.ObtenerAtaqueTotal();
+        enemigo.RecibirDaño(ataque);
+    }
     public void Curar()
     {
         this.Vida = 100;
