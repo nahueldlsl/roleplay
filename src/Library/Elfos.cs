@@ -1,72 +1,70 @@
 ﻿namespace Library;
 
-public class Elfos
+public class Elfos : IPersonaje
 {
-    public string Name { get; set; }
-    public int HealthPoints { get; private set; }
-    public List<Item> Inventario;
-    public Elfos(string name)
+    // --- COPIA 1 DE LAS PROPIEDADES ---
+    public string Nombre { get; set; }
+    public int Vida { get; private set; }
+    public List<Item> Inventario { get; set; }
+
+    // --- COPIA 1 DEL CONSTRUCTOR ---
+    public Elfos(string nombre)
     {
-        this.Name = name;
-        this.HealthPoints = 100;
-        this.Inventario = new List<Item>
-        {
-            new Item("Arco", 70, 0),
-            new Item("Armadura", 0, 65)
-        };
+        this.Nombre = nombre;
+        this.Vida = 100;
+        this.Inventario = new List<Item>();
     }
-    // Calcular ataque total
+
+    // --- COPIA 1 DE LOS MÉTODOS ---
+    public void EquiparItem(Item item)
+    {
+        if (item is IMagico)
+        {
+            // 'this is Mago' será falso para un Elfos, así que la lógica funciona.
+            if (this is Mago) 
+            {
+                this.Inventario.Add(item);
+                Console.WriteLine($"{this.Nombre} ha equipado el item mágico {item.Nombre}.");
+            }
+            else
+            {
+                Console.WriteLine($"{this.Nombre} no es un ser mágico. No puede equipar {item.Nombre}.");
+            }
+        }
+        else
+        {
+            this.Inventario.Add(item);
+            Console.WriteLine($"{this.Nombre} ha equipado {item.Nombre}.");
+        }
+    }
+    
     public int ObtenerAtaqueTotal()
     {
-        int total = 0;
-        foreach (var item in Inventario)
-        {
-            total += item.Ataque;
-        }
-
-        return total;
+        int ataqueTotal = 0;
+        foreach (Item item in this.Inventario) { ataqueTotal += item.Ataque; }
+        return ataqueTotal;
     }
-    // Calcular defensa total
+
     public int ObtenerDefensaTotal()
     {
-        int total = 0;
-        foreach (var item in Inventario)
-        {
-            total += item.Defensa;
-        }
-
-        return total;
+        int defensaTotal = 0;
+        foreach (Item item in this.Inventario) { defensaTotal += item.Defensa; }
+        return defensaTotal;
     }
-    // Recibir daño
+
     public void RecibirDaño(int daño)
     {
-        int defensa = ObtenerDefensaTotal();
-        int dañoReal = daño - defensa;
-        if (dañoReal < 0)
-        {
-            dañoReal = 0;
-        }
-
-        this.HealthPoints -= dañoReal;
-        if (this.HealthPoints < 0)
-        {
-            this.HealthPoints = 0;
-        }
+        this.Vida -= daño;
     }
 
-    public void Atacar(Mago enemigo) // Solo ataca a Magos
+    public void Atacar(IPersonaje enemigo)
     {
-        int ataque = this.ObtenerAtaqueTotal();
-        enemigo.RecibirDaño(ataque);
+        int dañoTotal = this.ObtenerAtaqueTotal();
+        enemigo.RecibirDaño(dañoTotal);
     }
-    public void Atacar(Enanos enemigo) // Solo ataca a Enanos
+
+    public void Curar()
     {
-        int ataque = this.ObtenerAtaqueTotal();
-        enemigo.RecibirDaño(ataque);
-    }
-    public void Atacar(Elfos enemigo) // Solo ataca a Elfos
-    {
-        int ataque = this.ObtenerAtaqueTotal();
-        enemigo.RecibirDaño(ataque);
+        this.Vida = 100;
     }
 }

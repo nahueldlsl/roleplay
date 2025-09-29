@@ -1,73 +1,69 @@
-﻿namespace Library;
-
-public class Enanos
+namespace Library;
+public class Enano : IPersonaje
 {
+    // --- COPIA 1 DE LAS PROPIEDADES ---
     public string Nombre { get; set; }
     public int Vida { get; private set; }
-    public List<Item> Inventario;
+    public List<Item> Inventario { get; set; }
 
-    public Enanos(string nombre)
+    // --- COPIA 1 DEL CONSTRUCTOR ---
+    public Enano(string nombre)
     {
         this.Nombre = nombre;
         this.Vida = 100;
-        this.Inventario = new List<Item>
-        {
-            new Item("Espada", 100, 0),
-            new Item("Escudo", 0, 50)
-        };
+        this.Inventario = new List<Item>();
     }
 
-    // Calcular ataque total
+    // --- COPIA 1 DE LOS MÉTODOS ---
+    public void EquiparItem(Item item)
+    {
+        if (item is IMagico)
+        {
+            // 'this is Mago' será falso para un Enano, así que la lógica funciona.
+            if (this is Mago) 
+            {
+                this.Inventario.Add(item);
+                Console.WriteLine($"{this.Nombre} ha equipado el item mágico {item.Nombre}.");
+            }
+            else
+            {
+                Console.WriteLine($"{this.Nombre} no es un ser mágico. No puede equipar {item.Nombre}.");
+            }
+        }
+        else
+        {
+            this.Inventario.Add(item);
+            Console.WriteLine($"{this.Nombre} ha equipado {item.Nombre}.");
+        }
+    }
+    
     public int ObtenerAtaqueTotal()
     {
-        int total = 0;
-        foreach (var item in Inventario)
-        {
-            total += item.Ataque;
-        }
-
-        return total;
+        int ataqueTotal = 0;
+        foreach (Item item in this.Inventario) { ataqueTotal += item.Ataque; }
+        return ataqueTotal;
     }
 
-    // Calcular defensa total
     public int ObtenerDefensaTotal()
     {
-        int total = 0;
-        foreach (var item in Inventario)
-        {
-            total += item.Defensa;
-        }
-
-        return total;
+        int defensaTotal = 0;
+        foreach (Item item in this.Inventario) { defensaTotal += item.Defensa; }
+        return defensaTotal;
     }
 
-    // Recibir daño
     public void RecibirDaño(int daño)
     {
-        int defensa = ObtenerDefensaTotal();
-        int dañoReal = daño - defensa;
-        if (dañoReal < 0)
-        {
-            dañoReal = 0;
-        }
-
-        this.Vida -= dañoReal;
-        if (this.Vida < 0)
-        {
-            this.Vida = 0;
-        }
+        this.Vida -= daño;
     }
 
-    // Atacar a otro Enano (o cualquier personaje que tenga RecibirDaño)
-    public void Atacar(Enanos enemigo) // Solo ataca enanos (?)
+    public void Atacar(IPersonaje enemigo)
     {
-        int ataque = this.ObtenerAtaqueTotal();
-        enemigo.RecibirDaño(ataque);
+        int dañoTotal = this.ObtenerAtaqueTotal();
+        enemigo.RecibirDaño(dañoTotal);
     }
 
-    // Mostrar estado
-    public void MostrarEstado()
+    public void Curar()
     {
-        Console.WriteLine($"{Nombre} tiene {Vida} de vida.");
+        this.Vida = 100;
     }
 }
