@@ -61,6 +61,16 @@ public class Enano : IPersonaje
         int dañoTotal = this.ObtenerAtaqueTotal();
         enemigo.RecibirDaño(dañoTotal);
     }
+    public void Atacar(Elfos enemigo) // Solo ataca enanos (?)
+    {
+        int ataque = this.ObtenerAtaqueTotal();
+        enemigo.RecibirDaño(ataque);
+    }
+    public void Atacar(Mago enemigo) // Solo ataca enanos (?)
+    {
+        int ataque = this.ObtenerAtaqueTotal();
+        enemigo.RecibirDaño(ataque);
+    }
 
     public void Curar()
     {

@@ -3,24 +3,13 @@ using Library;
 
 namespace LibraryTests;
 
-public class Tests
-namespace LibraryTests
+public class Test()
 {
-    [SetUp]
-    public void Setup()
-    public class ElfosTests
-    {
-    }
-        [Test]
-        public void CrearElfoTest()
-        {
-            // Arrange & Act
-            Elfos elfo = new Elfos("Legolas");
-
     [Test]
-    public void CrearElfoTest(Elfos elfo)
+    public void CrearElfoTest()
     {
-        Elfos Adam = new Elfos("Adam");
+        // Arrange & Act
+        Elfos elfo = new Elfos("Legolas");
         Assert.Pass();
             // Assert
             Assert.AreEqual("Legolas", elfo.Name);
@@ -61,9 +50,6 @@ namespace LibraryTests
         }
     }
 
-    // -------------------------------
-    // TESTS DE ENANOS
-    // -------------------------------
     public class EnanosTests
     {
         [Test]
@@ -140,4 +126,5 @@ namespace LibraryTests
             Assert.AreEqual(50, defensor.Vida);
         }
     }
-}
+
+
