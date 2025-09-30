@@ -53,7 +53,30 @@ public class Enano : IPersonaje
 
     public void RecibirDaño(int daño)
     {
-        this.Vida -= daño;
+        if (ObtenerDefensaTotal() > 0)
+        {
+            int defensa = ObtenerDefensaTotal();
+            daño = daño - defensa;
+            if (daño > 0 && daño <= 100)
+            {
+                this.Vida -= daño;
+            }
+            else if (daño > 100)
+            {
+                this.Vida = 0;
+            }
+        }
+        else
+        {
+            if (daño > 100)
+            {
+                this.Vida = 0;
+            }
+            else
+            {
+                this.Vida -= daño;
+            }
+        }
     }
 
     public void Atacar(IPersonaje enemigo)
@@ -61,17 +84,6 @@ public class Enano : IPersonaje
         int dañoTotal = this.ObtenerAtaqueTotal();
         enemigo.RecibirDaño(dañoTotal);
     }
-    public void Atacar(Elfos enemigo) // Solo ataca enanos (?)
-    {
-        int ataque = this.ObtenerAtaqueTotal();
-        enemigo.RecibirDaño(ataque);
-    }
-    public void Atacar(Mago enemigo) // Solo ataca enanos (?)
-    {
-        int ataque = this.ObtenerAtaqueTotal();
-        enemigo.RecibirDaño(ataque);
-    }
-
     public void Curar()
     {
         this.Vida = 100;

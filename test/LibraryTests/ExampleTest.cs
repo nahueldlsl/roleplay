@@ -12,8 +12,8 @@ public class Test()
         Elfos elfo = new Elfos("Legolas");
         Assert.Pass();
             // Assert
-            Assert.AreEqual("Legolas", elfo.Name);
-            Assert.AreEqual(100, elfo.HealthPoints);
+            Assert.AreEqual("Legolas", elfo.Nombre);
+            Assert.AreEqual(100, elfo.Vida);
             Assert.AreEqual(2, elfo.Inventario.Count);
         }
 
@@ -22,6 +22,10 @@ public class Test()
         {
             // Arrange
             Elfos elfo = new Elfos("Tauriel");
+            Item arco = new Item { Nombre = "Arco", Ataque = 60, Defensa = 0 };
+            Item armadura = new Item { Nombre = "Armadura", Defensa = 75, Ataque = 0 };
+            elfo.EquiparItem(arco);
+            elfo.EquiparItem(armadura);
 
             // Act
             var item1 = elfo.Inventario[0];
@@ -38,14 +42,18 @@ public class Test()
             // Arrange
             Elfos legolas = new Elfos("Legolas");
             Elfos tauriel = new Elfos("Tauriel");
+            Item arco = new Item { Nombre = "Arco", Ataque = 60, Defensa = 0 };
+            Item armadura = new Item { Nombre = "Armadura", Defensa = 75, Ataque = 0 };
+            legolas.EquiparItem(arco);
+            tauriel.EquiparItem(armadura);
 
-            int vidaInicial = tauriel.HealthPoints;
+            int vidaInicial = tauriel.Vida;
 
             // Act
             legolas.Atacar(tauriel);
 
             // Assert
-            Assert.Less(tauriel.HealthPoints, vidaInicial,
+            Assert.Less(tauriel.Vida, vidaInicial,
                 "La vida de Tauriel debería haber disminuido después del ataque");
         }
     }
@@ -55,7 +63,11 @@ public class Test()
         [Test]
         public void Constructor_CreaEnanoConVida100YDosItems()
         {
-            Enanos enano = new Enanos("Gimli");
+            Enano enano = new Enano("Gimli");
+            Item espada = new Item { Nombre = "Espada", Ataque = 80, Defensa = 0 };
+            Item escudo = new Item { Nombre = "Escudo", Ataque = 0, Defensa = 55 };
+            enano.EquiparItem(espada);
+            enano.EquiparItem(escudo);
 
             Assert.AreEqual("Gimli", enano.Nombre);
             Assert.AreEqual(100, enano.Vida);
@@ -67,7 +79,11 @@ public class Test()
         [Test]
         public void ObtenerAtaqueTotal_SumaAtaquesDeItems()
         {
-            Enanos enano = new Enanos("Gimli");
+            Enano enano = new Enano("Gimli");
+            Item espada = new Item { Nombre = "Espada", Ataque = 90, Defensa = 0 };
+            Item cuchillo = new Item { Nombre = "Cuticuchillo", Ataque = 10, Defensa = 0 };
+            enano.EquiparItem(espada);
+            enano.EquiparItem(cuchillo);
 
             int ataqueTotal = enano.ObtenerAtaqueTotal();
 
@@ -77,7 +93,9 @@ public class Test()
         [Test]
         public void ObtenerDefensaTotal_SumaDefensasDeItems()
         {
-            Enanos enano = new Enanos("Gimli");
+            Enano enano = new Enano("Gimli");
+            Item escudo = new Item { Nombre = "Escudo", Ataque = 0, Defensa = 50 };
+            enano.EquiparItem(escudo);
 
             int defensaTotal = enano.ObtenerDefensaTotal();
 
@@ -87,8 +105,10 @@ public class Test()
         [Test]
         public void RecibirDaño_MayorQueDefensa_RestaVidaCorrectamente()
         {
-            Enanos enano = new Enanos("Gimli");
-
+            Enano enano = new Enano("Gimli");
+            Item escudo = new Item { Nombre = "Escudo", Ataque = 0, Defensa = 50 };
+            enano.EquiparItem(escudo);
+            
             enano.RecibirDaño(80); // 80 - defensa 50 = 30
 
             Assert.AreEqual(70, enano.Vida);
@@ -97,7 +117,9 @@ public class Test()
         [Test]
         public void RecibirDaño_MenorQueDefensa_NoRestaVida()
         {
-            Enanos enano = new Enanos("Gimli");
+            Enano enano = new Enano("Gimli");
+            Item escudo = new Item { Nombre = "Escudo", Ataque = 0, Defensa = 50 };
+            enano.EquiparItem(escudo);
 
             enano.RecibirDaño(40); // 40 - defensa 50 = daño real 0
 
@@ -107,7 +129,7 @@ public class Test()
         [Test]
         public void RecibirDaño_NoPermiteVidaNegativa()
         {
-            Enanos enano = new Enanos("Gimli");
+            Enano enano = new Enano("Gimli");
 
             enano.RecibirDaño(500);
 
@@ -117,8 +139,12 @@ public class Test()
         [Test]
         public void Atacar_RestaVidaDelEnemigo()
         {
-            Enanos atacante = new Enanos("Gimli");
-            Enanos defensor = new Enanos("Thorin");
+            Enano atacante = new Enano("Gimli");
+            Enano defensor = new Enano("Thorin");
+            Item espada = new Item { Nombre = "Espada", Ataque = 100, Defensa = 0 };
+            Item escudo = new Item { Nombre = "Escudo", Ataque = 0, Defensa = 50 };
+            atacante.EquiparItem(espada);
+            defensor.EquiparItem(escudo);
 
             atacante.Atacar(defensor);
 

@@ -20,7 +20,7 @@ public class Elfos : IPersonaje
     {
         if (item is IMagico)
         {
-            // 'this is Mago' será falso para un Elfos, así que la lógica funciona.
+            // 'this is Mago' será falso para un Elfo, así que la lógica funciona.
             if (this is Mago) 
             {
                 this.Inventario.Add(item);
@@ -54,7 +54,30 @@ public class Elfos : IPersonaje
 
     public void RecibirDaño(int daño)
     {
-        this.Vida -= daño;
+        if (ObtenerDefensaTotal() > 0)
+        {
+            int defensa = ObtenerDefensaTotal();
+            daño = daño - defensa;
+            if (daño > 0 && daño <= 100)
+            {
+                this.Vida -= daño;
+            }
+            else if (daño > 100)
+            {
+                this.Vida = 0;
+            }
+        }
+        else
+        {
+            if (daño > 100)
+            {
+                this.Vida = 0;
+            }
+            else
+            {
+                this.Vida -= daño;
+            }
+        }
     }
 
     public void Atacar(IPersonaje enemigo)
