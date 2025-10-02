@@ -21,7 +21,7 @@ public class Encounter
 
         while (HayHeroesVivos() && HayEnemigosVivos())
         {
-            // --- FASE 1: TURNO DE LOS ENEMIGOS ---
+
             Console.WriteLine("\n--- Turno de los Enemigos ---");
             List<Heroe> heroesVivos = ObtenerHeroesVivos();
             List<Enemigo> enemigosVivos = ObtenerEnemigosVivos();
@@ -39,36 +39,36 @@ public class Encounter
                 }
             }
             
-            // --- FASE 2: TURNO DE LOS HÉROES ---
+
             Console.WriteLine("\n--- Turno de los Héroes ---");
-            // Volvemos a obtener las listas por si algún héroe murió en la fase anterior
+
             heroesVivos = ObtenerHeroesVivos(); 
             enemigosVivos = ObtenerEnemigosVivos();
 
-            // Bucle externo: recorre a los héroes que atacan
+
             foreach (Heroe heroe in heroesVivos)
             {
-                // Bucle interno: recorre a los enemigos que son atacados
+
                 foreach (Enemigo enemigo in enemigosVivos)
                 {
-                    // Un enemigo ya derrotado no puede ser atacado de nuevo en este turno
+
                     if (enemigo.Vida > 0)
                     {
                         Console.WriteLine($"{heroe.Nombre} ataca a {enemigo.Nombre}.");
                         int vidaEnemigoAntes = enemigo.Vida;
                         heroe.Atacar(enemigo);
 
-                        // Comprobar si el enemigo murió con este ataque
+
                         if (enemigo.Vida <= 0 && vidaEnemigoAntes > 0)
                         {
                             Console.WriteLine($"{enemigo.Nombre} ha sido derrotado!");
                             heroe.AcumularPuntos(enemigo.ValorDePuntosDeVictoria);
 
-                            // Comprobar si el héroe debe curarse
+
                             if (heroe.PuntosDeVictoria >= 5 && !heroe.YaRecibioCuraPorVP)
                             {
                                 heroe.Curar();
-                                heroe.YaRecibioCuraPorVP = true; // Marcamos que ya se curó
+                                heroe.YaRecibioCuraPorVP = true; 
                             }
                         }
                     }
@@ -78,7 +78,7 @@ public class Encounter
 
         Console.WriteLine("\n¡EL ENCUENTRO HA TERMINADO!");
         
-        // --- LÓGICA DEL GANADOR ---
+       
         if (HayHeroesVivos())
         {
             Console.WriteLine("¡Los Héroes han ganado!");
@@ -89,7 +89,7 @@ public class Encounter
         }
     }
 
-    // --- MÉTODOS PRIVADOS DE AYUDA (Refactorizados para reutilizarlos) ---
+ 
 
     private List<Heroe> ObtenerHeroesVivos()
     {
