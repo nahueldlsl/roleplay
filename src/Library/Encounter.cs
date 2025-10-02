@@ -18,18 +18,42 @@ public class Encounter
     {
         Console.WriteLine("¡Comienza el encuentro!");
 
-        // Usamos nuestros nuevos métodos para la condición del bucle.
         while (HayHeroesVivos() && HayEnemigosVivos())
         {
-            // Fase 1: Turno de ataque de los Enemigos.
+            Console.WriteLine("\n--- Turno de los Enemigos ---");
+            List<Heroe> heroesVivos = new List<Heroe>();
+            foreach (Heroe heroe in this.heroes)
+            {
+                if (heroe.Vida > 0)
+                {
+                    heroesVivos.Add(heroe);
+                }
+            }
 
-            // Fase 2: Turno de ataque de los Héroes.
+            List<Enemigo> enemigosVivos = new List<Enemigo>();
+            foreach (Enemigo enemigo in this.enemigos)
+            {
+                if (enemigo.Vida > 0)
+                {
+                    enemigosVivos.Add(enemigo);
+                }
+            }
+            
+            for (int i = 0; i < enemigosVivos.Count; i++)
+            {
+                int indiceHeroeAtacado = i % heroesVivos.Count;
+            
+                Enemigo atacante = enemigosVivos[i];
+                Heroe defensor = heroesVivos[indiceHeroeAtacado];
+
+                Console.WriteLine($"{atacante.Nombre} ataca a {defensor.Nombre}.");
+                atacante.Atacar(defensor);
+            }
         }
 
         Console.WriteLine("¡El encuentro ha terminado!");
     }
-
-    // --- MÉTODOS PRIVADOS DE AYUDA ---
+    
 
     private bool HayHeroesVivos()
     {
