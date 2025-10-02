@@ -1,12 +1,10 @@
 ﻿namespace Library;
 using System.Collections.Generic;
-// Archivo: Mago.cs
-public class Mago : Personaje
+public class Mago : Heroe 
 {
-    // Propiedad única del Mago
     public List<Hechizo> Hechizos { get; set; }
 
-    // El constructor del Mago llama al constructor de Personaje con 'base(nombre)'
+
     public Mago(string nombre) : base(nombre)
     {
         this.Hechizos = new List<Hechizo>(); 
