@@ -1,9 +1,9 @@
-namespace Library;
-using System.Collections.Generic;
-using System;
-
 // Archivo: Personaje.cs
-    public class Personaje : IPersonaje
+namespace Library;
+using System;
+using System.Collections.Generic;
+
+public class Personaje : IPersonaje
 {
     // --- PROPIEDADES COMUNES ---
     public string Nombre { get; set; }
@@ -59,13 +59,11 @@ using System;
         int defensa = ObtenerDefensaTotal();
         int dañoReal = daño - defensa;
 
-        // Solo resta vida si el daño es mayor que la defensa
         if (dañoReal > 0)
         {
             this.Vida -= dañoReal;
         }
 
-        // Asegura que la vida nunca sea negativa
         if (this.Vida < 0)
         {
             this.Vida = 0;
