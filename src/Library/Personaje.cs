@@ -1,9 +1,11 @@
 namespace Library;
 using System.Collections.Generic;
+using System;
 
-public class Personaje : IPersonaje
+// Archivo: Personaje.cs
+    public class Personaje : IPersonaje
 {
-    // --- PROPIEDADES ---
+    // --- PROPIEDADES COMUNES ---
     public string Nombre { get; set; }
     public int Vida { get; private set; }
     public List<Item> Inventario { get; set; }
@@ -16,30 +18,58 @@ public class Personaje : IPersonaje
         this.Inventario = new List<Item>();
     }
 
-    // --- MÉTODOS DEL CONTRATO IPersonaje ---
+    // --- MÉTODOS COMUNES ---
+    public void EquiparItem(Item item)
+    {
+        if (item is IMagico)
+        {
+            if (this is Mago) 
+            {
+                this.Inventario.Add(item);
+                Console.WriteLine($"{this.Nombre} (Mago) ha equipado el item mágico {item.Nombre}.");
+            }
+            else
+            {
+                Console.WriteLine($"{this.Nombre} no es un ser mágico. No puede equipar {item.Nombre}.");
+            }
+        }
+        else
+        {
+            this.Inventario.Add(item);
+            Console.WriteLine($"{this.Nombre} ha equipado {item.Nombre}.");
+        }
+    }
+    
     public int ObtenerAtaqueTotal()
     {
         int ataqueTotal = 0;
-        foreach (Item item in this.Inventario)
-        {
-            ataqueTotal = ataqueTotal + item.Ataque;
-        }
+        foreach (Item item in this.Inventario) { ataqueTotal += item.Ataque; }
         return ataqueTotal;
     }
 
     public int ObtenerDefensaTotal()
     {
         int defensaTotal = 0;
-        foreach (Item item in this.Inventario)
-        {
-            defensaTotal = defensaTotal + item.Defensa;
-        }
+        foreach (Item item in this.Inventario) { defensaTotal += item.Defensa; }
         return defensaTotal;
     }
 
     public void RecibirDaño(int daño)
     {
-        this.Vida = this.Vida - daño;
+        int defensa = ObtenerDefensaTotal();
+        int dañoReal = daño - defensa;
+
+        // Solo resta vida si el daño es mayor que la defensa
+        if (dañoReal > 0)
+        {
+            this.Vida -= dañoReal;
+        }
+
+        // Asegura que la vida nunca sea negativa
+        if (this.Vida < 0)
+        {
+            this.Vida = 0;
+        }
     }
 
     public void Atacar(IPersonaje enemigo)
@@ -51,32 +81,5 @@ public class Personaje : IPersonaje
     public void Curar()
     {
         this.Vida = 100;
-    }
-    
-    // Dentro de la clase Personaje
-    public void EquiparItem(Item item)
-    {
-        // PRIMERA PREGUNTA: ¿El item es mágico?
-        if (item is IMagico)
-        {
-            // Si es mágico, SEGUNDA PREGUNTA: ¿Este personaje es un Mago?
-            if (this is Mago)
-            {
-                // Es mágico y soy un Mago, entonces SÍ puedo equiparlo.
-                this.Inventario.Add(item);
-                Console.WriteLine($"{this.Nombre} (Mago) ha equipado el item mágico {item.Nombre}.");
-            }
-            else
-            {
-                // Es mágico pero NO soy un Mago, entonces NO puedo equiparlo.
-                Console.WriteLine($"{this.Nombre} no es un ser mágico. No puede equipar {item.Nombre}.");
-            }
-        }
-        else
-        {
-            // Si el item NO es mágico, cualquiera puede equiparlo sin problemas.
-            this.Inventario.Add(item);
-            Console.WriteLine($"{this.Nombre} ha equipado {item.Nombre}.");
-        }
     }
 }
