@@ -79,5 +79,6 @@ public class Personaje : IPersonaje
     public void Curar()
     {
         this.Vida = 100;
+        Console.WriteLine($"¡{this.Nombre} se ha curado por completo!");
     }
 }

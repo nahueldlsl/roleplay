@@ -5,11 +5,12 @@ public class Heroe : Personaje
 {
  
     public int PuntosDeVictoria { get; private set; }
-
+    public bool YaRecibioCuraPorVP { get; set; }
 
     public Heroe(string nombre) : base(nombre)
     {
         this.PuntosDeVictoria = 0; 
+        this.YaRecibioCuraPorVP = false;
     }
 
 
